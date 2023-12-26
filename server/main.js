@@ -1,10 +1,24 @@
 async function handler(request, connInfo) {
   const requrl=new URL(request.url)
+  const bot_UA=["Twitter","facebook"]
   if(requrl.pathname=="/make"){
     const html=await Deno.readTextFile("./site/index.html")
     return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
   }else if(requrl.pathname=="/url"){
-    
+    if((request.headers["User-Agent"].match(/Twitter/))||(request.headers["User-Agent"].match(/facebook/))){
+      let img,x,y,text,title
+      img=decodeURIComponent(requrl.searchParams.get("img"))
+      x=decodeURIComponent(requrl.searchParams.get("x"))
+      y=decodeURIComponent(requrl.searchParams.get("y"))
+      text=decodeURIComponent(requrl.searchParams.get("text"))
+      title=decodeURIComponent(requrl.searchParams.get("title"))
+      let dummyHTML=Deno.readTextFile("./server/dummy.html")
+      dummyHTML=dummyHTML.replaceAll("{img}",img).replaceAll("{x}",x).replaceAll("{y}",y).replaceAll("{text}",text).replaceAll("{title}",title)
+      return new Response(dummyHTML,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
+    }else{
+      let url=decodeURIComponent(requrl.searchParams.get("url"))
+      return new Response("",{status:301,headers:{"location":url}})
+    }
   }
   return new Response("",{status:404})
 }
