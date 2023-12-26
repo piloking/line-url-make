@@ -53,9 +53,8 @@
           text=encodeURIComponent(document.getElementById("text").value)
           [x,y]=imgxy.split("x")
           let output=`https://line-url.deno.dev/url?url=${url}&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}`
-          const scripturl=("https://is.gd/create.php?format=json&callback=view&url="+encodeURIComponent(url))
-          let outHTML=`<script src="${scripturl}" />`
-          document.getElementById("output").innerHTML=outHTML
+          const scripturl=("https://is.gd/create.php?format=json&callback=view&url="+encodeURIComponent(output))
+          document.getElementById("isgd").src=scripturl
         }
         function copy() {
           let input = document.getElementById("out")
@@ -70,6 +69,7 @@
           document.getElementById("output").innerHTML=outHtML
         }
       </script>
+      <script id="isgd"></script>
     </div>
   </body>
 </html>
