@@ -5,7 +5,7 @@ async function handler(request, connInfo) {
     const html=await Deno.readTextFile("./site/index.html")
     return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
   }else if(requrl.pathname=="/url"){
-    if((request.headers["user-agent"].match(/Twitter/))||(request.headers["user-agent"].match(/facebook/))){
+    if((request.headers.get("user-agent").match(/Twitter/))||(request.headers.get("user-agent").match(/facebook/))){
       let img,x,y,text,title
       img=decodeURIComponent(requrl.searchParams.get("img"))
       x=decodeURIComponent(requrl.searchParams.get("x"))
