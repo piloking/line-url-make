@@ -12,7 +12,7 @@ async function handler(request, connInfo) {
       y=decodeURIComponent(requrl.searchParams.get("y"))
       text=decodeURIComponent(requrl.searchParams.get("text"))
       title=decodeURIComponent(requrl.searchParams.get("title"))
-      let dummyHTML=Deno.readTextFile("./server/dummy.html")
+      let dummyHTML=await Deno.readTextFile("./server/dummy.html")
       dummyHTML=dummyHTML.replaceAll("{img}",img).replaceAll("{x}",x).replaceAll("{y}",y).replaceAll("{text}",text).replaceAll("{title}",title)
       return new Response(dummyHTML,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
     }else{
