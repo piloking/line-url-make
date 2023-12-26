@@ -54,20 +54,22 @@
           text=encodeURIComponent(document.getElementById("text").value)
           [x,y]=imgxy.split("x")
           let output=`https://line-url.deno.dev/url?url=${url}&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}`
-          output=await short(output)
+          const scripturl=("https://is.gd/create.php?format=json&callback=view&url="+encodeURIComponent(url))
           let outHTML=`
-          <input type="text" id="out" value="${output}" />
-          <button type="button" onclick="copy()">コピー</button>`
+          <script src="${scripturl}" />`
+          document.getElementById("output").innerHTML=outHtML
         }
         function copy() {
           let input = document.getElementById("out")
           input.select()
           document.execCommand('copy')
         }
-        async function short(url) {
-          const res=await fetch("https://is.gd/create.php?format=simple&url="+encodeURIComponent(url))
-          const text=await res.text()
-          return text
+        function view(json) {
+          const output=json["shorturl"]
+          let outHTML=`
+          <input type="text" id="out" value="${output}" />
+          <button type="button" onclick="copy()">コピー</button>`
+          document.getElementById("output").innerHTML=outHtML
         }
       </script>
     </div>
