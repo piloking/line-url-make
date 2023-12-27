@@ -15,6 +15,11 @@ async function handler(request, connInfo) {
       y=decodeURIComponent(requrl.searchParams.get("y"))
       text=decodeURIComponent(requrl.searchParams.get("text"))
       title=decodeURIComponent(requrl.searchParams.get("title"))
+      let dummyHTML=await Deno.readTextFile("./server/dummy.html")
+      dummyHTML=dummyHTML.replaceAll("{img}",img).replaceAll("{x}",x).replaceAll("{y}",y).replaceAll("{text}",text).replaceAll("{title}",title)
+      return new Response(dummyHTML,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
+    }else{
+      let url=decodeURIComponent(requrl.searchParams.get("url"))
       if(requrl.searchParams.get("tag")){
         let tag=decodeURIComponent(requrl.searchParams.get("tag"))
         const kv=await Deno.openKv()
@@ -25,16 +30,11 @@ async function handler(request, connInfo) {
         }catch{
         data=[]
         }
-        let date=new Date().toLocaleDateString()
+        let date=Date.now()
         
-        data.push({conninfo:connInfo,date:date})
+        data.push({connInfo:connInfo,date:date})
         await kv.set(["ip",tag],data)
       }
-      let dummyHTML=await Deno.readTextFile("./server/dummy.html")
-      dummyHTML=dummyHTML.replaceAll("{img}",img).replaceAll("{x}",x).replaceAll("{y}",y).replaceAll("{text}",text).replaceAll("{title}",title)
-      return new Response(dummyHTML,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
-    }else{
-      let url=decodeURIComponent(requrl.searchParams.get("url"))
       return new Response("",{status:301,headers:{"location":url}})
     }
   }else if(requrl.pathname=="/img"){
