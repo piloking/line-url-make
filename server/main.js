@@ -70,8 +70,16 @@ async function handler(request, connInfo) {
   }else if(requrl.pathname=="/ip"){
       const kv=await Deno.openKv()
       let tag=decodeURIComponent(requrl.searchParams.get("tag"))
-      let data=await kv.get(["ip",tag])
-      if(!data){data=[]}
+      var data=[];
+        try{
+        data=await kv.get(["ip",tag])
+        }catch{
+        data=[]
+        }
+        if(!data){
+          data=[]
+        }
+      
       if(requrl.searchParams.get("del")){
         await kv.delete(["ip",tag])
       }
@@ -88,9 +96,9 @@ async function handler(request, connInfo) {
           <p>
             Time: ${new Date(e.date).toUTCString()}
           </p>
-        </li>`
+        </li><br>`
       })
-      element=element+`<ol><a href="https://line-url.deno.dev/ip?tag=${tag}&del=true">データを削除</a>`
+      element=element+`</ol><a href="https://line-url.deno.dev/ip?tag=${tag}&del=true">データを削除</a>`
       html=html.replaceAll("{img}","").replaceAll("{x}","").replaceAll("{y}","").replaceAll("{title}","").replaceAll("<p>{text}</p>",element)
       return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
   }
