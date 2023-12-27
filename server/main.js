@@ -56,7 +56,22 @@ async function handler(request, connInfo) {
         await kv.delete(["ip",tag])
       }
       let html=await Deno.readTextFile("./server/dummy.html")
-      html=html.replaceAll("{img}","").replaceAll("{x}","").replaceAll("{y}","").replaceAll("{title}","").replaceAll("<p>{text}</p>",renderToString(page(data.value)))
+      let element="<ol>"
+      data.value.forEach(e=>{
+        element=element+`<li>
+          <p>
+            IP: ${e.ip}
+          </p>
+          <p>
+            User-Agent: ${e.ua}
+          </p>
+          <p>
+            Time: ${new Date(e.date).toLocaleDateString()}
+          </p>
+        </li>`
+      })
+      element=element+`<ol><a href="https://line-url.deno.dev/ip?tag=${tag}&del=true">データを削除</a>`
+      html=html.replaceAll("{img}","").replaceAll("{x}","").replaceAll("{y}","").replaceAll("{title}","").replaceAll("<p>{text}</p>",element)
       return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
   }
   return new Response("",{status:404})
