@@ -72,7 +72,7 @@
           text=encodeURIComponent(document.getElementById("text").value);
           tag=encodeURIComponent(document.getElementById("tag").value);
           [x,y]=imgxy.split("x");
-          let output=`https://line-url.deno.dev/url?url=${url}&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}`;
+          let output=`https://line-url.deno.dev/url?url=${url}&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}&tag=${tag}`;
           const scripturl=("https://is.gd/create.php?format=json&callback=view&url="+encodeURIComponent(output));
           document.getElementById("isgd").src=scripturl;
         }
