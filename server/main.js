@@ -1,3 +1,5 @@
+import renderToString from 'https://cdn.skypack.dev/preact-render-to-string@6.2.2?dts'
+
 async function handler(request, connInfo) {
   const requrl=new URL(request.url)
   const bot_UA=["Twitter","facebook"]
@@ -52,7 +54,8 @@ async function handler(request, connInfo) {
       if(requrl.searchParams.get("del")){
         await kv.delete(["ip",tag])
       }
-      return new Response(JSON.stringify(data.value,null,2))
+      const html=renderToString(page(data.value))
+      return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
   }
   return new Response("",{status:404})
 }
