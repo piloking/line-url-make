@@ -4,6 +4,9 @@ async function handler(request, connInfo) {
   if(requrl.pathname=="/make"){
     const html=await Deno.readTextFile("./site/index.html")
     return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
+  }else if(requrl.pathname=="/pro"){
+    const html=await Deno.readTextFile("./site/pro.html")
+    return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
   }else if(requrl.pathname=="/url"){
     if((request.headers.get("user-agent").match(/Twitter/))||(request.headers.get("user-agent").match(/facebook/))){
       let img,x,y,text,title
@@ -12,6 +15,20 @@ async function handler(request, connInfo) {
       y=decodeURIComponent(requrl.searchParams.get("y"))
       text=decodeURIComponent(requrl.searchParams.get("text"))
       title=decodeURIComponent(requrl.searchParams.get("title"))
+      if(requrl.searchParams.get("tag")){
+        let tag=decodeURIComponent(requrl.searchParams.get("tag"))
+        const kv=await Deno.openKv()
+        try{
+        let old_data=await kv.read(tag,connInfo)
+        let data=old_data.value
+        }catch{
+        let data=[]
+        }
+        let date=new Date().toLocaleDateString()
+        
+        data.push({conninfo:connInfo,date:date})
+        await kv.write(tag,data)
+      }
       let dummyHTML=await Deno.readTextFile("./server/dummy.html")
       dummyHTML=dummyHTML.replaceAll("{img}",img).replaceAll("{x}",x).replaceAll("{y}",y).replaceAll("{text}",text).replaceAll("{title}",title)
       return new Response(dummyHTML,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
