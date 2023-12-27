@@ -55,9 +55,9 @@ async function handler(request, connInfo) {
       if(requrl.searchParams.get("del")){
         await kv.delete(["ip",tag])
       }
-      let HTML=await Deno.readTextFile("./server/dummy.html")
-      HTML=HTML.replaceAll("{img}","").replaceAll("{x}","").replaceAll("{y}","").replaceAll("{title}","").replaceAll("<p>{text}</p>",renderToString(page(data.value)))
-      return new Response(HTML,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
+      let html=await Deno.readTextFile("./server/dummy.html")
+      html=html.replaceAll("{img}","").replaceAll("{x}","").replaceAll("{y}","").replaceAll("{title}","").replaceAll("<p>{text}</p>",renderToString(page(data.value)))
+      return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
   }
   return new Response("",{status:404})
 }
