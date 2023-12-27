@@ -61,6 +61,7 @@
       </label>
       <button type="button" onclick="make()">作成</button>
       <div id="output"></div>
+      <div id="outurl"></div>
       <p>UI by <a href="https://x.com/amex2189">ame_x</a></p>
       <script async="">
         async function make() {
@@ -75,6 +76,7 @@
           let output=`https://line-url.deno.dev/url?url=${url}&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}&tag=${tag}`;
           const scripturl=("https://is.gd/create.php?format=json&callback=view&url="+encodeURIComponent(output));
           document.getElementById("isgd").src=scripturl;
+          document.getElementById("outurl").innerHTML=`<a href=../ip?tag=${tag}>ログ</a>`;
         }
         function copy() {
           let input = document.getElementById("out")
