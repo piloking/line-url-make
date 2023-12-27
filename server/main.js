@@ -1,5 +1,5 @@
 import renderToString from 'https://cdn.skypack.dev/preact-render-to-string@6.2.2?dts'
-import page from './ip.jsx'
+import {page} from './ip.jsx'
 
 async function handler(request, connInfo) {
   const requrl=new URL(request.url)
