@@ -20,7 +20,7 @@ async function handler(request, connInfo) {
         const kv=await Deno.openKv()
         let data
         try{
-        let old_data=await kv.get(tag,connInfo)
+        let old_data=await kv.get(["ip",tag],connInfo)
         data=old_data.value
         }catch{
         data=[]
@@ -28,7 +28,7 @@ async function handler(request, connInfo) {
         let date=new Date().toLocaleDateString()
         
         data.push({conninfo:connInfo,date:date})
-        await kv.set(tag,data)
+        await kv.set(["ip",tag],data)
       }
       let dummyHTML=await Deno.readTextFile("./server/dummy.html")
       dummyHTML=dummyHTML.replaceAll("{img}",img).replaceAll("{x}",x).replaceAll("{y}",y).replaceAll("{text}",text).replaceAll("{title}",title)
