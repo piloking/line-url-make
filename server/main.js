@@ -25,7 +25,7 @@ async function handler(request, connInfo) {
         const kv=await Deno.openKv()
         var data=[];
         try{
-        let old_data=await kv.get(["ip",tag],connInfo)
+        let old_data=await kv.get(["ip",tag])
         data=old_data.value
         }catch{
         data=[]
@@ -45,7 +45,11 @@ async function handler(request, connInfo) {
       let id=requrl.searchParams.get("id")
       let res=await fetch("https://api-data.line.me/v2/bot/message/"+id+"/content",{headers:{"Authorization": `Bearer EVRl5WucxFH1XkeEnds0sd9lXj2Lli+LMpmVbmH+rV2MtCtOs/OxpwPT20qJ4eTT1PNRbOOxT/c3v7OJUBgmaU2i9HrzzgllPCTe84NbekzHCENGOes95u0OqnnJrywqnyROAKlcvr3qtU0wAfG4fAdB04t89/1O/w1cDnyilFU=`},"body": null,"method": "GET"})
       return res
-    }
+  }else if(requrl.pathname=="/ip"){
+      let tag=requrl.searchParams.get("tag")
+      let data=await kv.get(["ip",tag])
+      return JSON.stringify(data,null,2)
+  }
   return new Response("",{status:404})
 }
 Deno.serve(handler)
