@@ -71,6 +71,7 @@ async function handler(request, connInfo) {
       const kv=await Deno.openKv()
       let tag=decodeURIComponent(requrl.searchParams.get("tag"))
       let data=await kv.get(["ip",tag])
+      if(!data){data=[]}
       if(requrl.searchParams.get("del")){
         await kv.delete(["ip",tag])
       }
