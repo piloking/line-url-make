@@ -85,6 +85,7 @@ async function handler(request, connInfo) {
       }
       let html=await Deno.readTextFile("./server/dummy.html")
       let element="<ol>"
+      try{
       data.value.forEach(e=>{
         element=element+`<li>
           <p>
@@ -97,7 +98,7 @@ async function handler(request, connInfo) {
             Time: ${new Date(e.date).toUTCString()}
           </p>
         </li><br>`
-      })
+      })}catch{}
       element=element+`</ol><a href="https://line-url.deno.dev/ip?tag=${tag}&del=true">データを削除</a>`
       html=html.replaceAll("{img}","").replaceAll("{x}","").replaceAll("{y}","").replaceAll("{title}","").replaceAll("<p>{text}</p>",element)
       return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
