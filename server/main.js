@@ -74,10 +74,10 @@ async function handler(request, connInfo) {
         try{
         data=await kv.get(["ip",tag])
         }catch{
-        data=[]
+        data={value:[]}
         }
         if(!data){
-          data=[]
+          data={value:[]}
         }
       
       if(requrl.searchParams.get("del")){
