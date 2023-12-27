@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <!-- UI by @amex2189  -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+  <title>LINE url maker</title>
+  <meta name="description" content="by ame_x & piloking">
+  <meta name="keywords" content="LINE url maker">
+  <meta property="og:title" content="LINE url maker">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="by ame_x & piloking">
+  <meta property="og:url" content="https://line-url.deno.dev/url">
+  <meta property="og:image:width" content="100"/>
+  <meta property="og:image:height" content="100"/>
+  <meta property="og:site_name" content="ぴろり">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LINE url maker">
+  <meta name="twitter:description" content="by ame_x & piloking">
+  <meta name="twitter:image" content="https://profile.line-scdn.net/r/g2/group/og_tag_default_image.png/c.496x273">
+    <link rel="stylesheet" href="https://cdn.ame-x.net/site-auto.css" />
+  </head>
+  <body>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <div class="box">
+      <h2>LINE url maker</h2>
+      <label>
+        遷移先URL
+        <input type="text" id="url" value="https://line.me/" />
+      </label>
+      <h4>プレビュー設定</h4>
+      <label>
+        画像URL
+        <input type="text" id="img" value="https://profile.line-scdn.net/r/g2/group/og_tag_default_image.png/c.496x273" />
+      </label>
+      <label>
+        画像幅
+        <input type="text" id="imgxy" value="100x100" />
+      </label>
+      <label>
+        タイトル
+        <input type="text" id="title" value="LINE url maker" />
+      </label>
+      <label>
+        テキスト
+        <input type="text" id="text" value="by ame_x & piloking" />
+      </label>
+      <button type="button" onclick="make()">作成</button>
+      <div id="output"></div>
+      <p>UI by <a href="https://x.com/amex2189">ame_x</a></p>
+      <script async="">
+        async function make() {
+          let url,img,imgxy,title,text,x,y;
+          url=encodeURIComponent(document.getElementById("url").value);
+          img=encodeURIComponent(document.getElementById("img").value);
+          imgxy=encodeURIComponent(document.getElementById("imgxy").value);
+          title=encodeURIComponent(document.getElementById("title").value);
+          text=encodeURIComponent(document.getElementById("text").value);
+          [x,y]=imgxy.split("x");
+          let output=`https://line-url.deno.dev/url?url=${url}&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}`;
+          const scripturl=("https://is.gd/create.php?format=json&callback=view&url="+encodeURIComponent(output));
+          document.getElementById("isgd").src=scripturl;
+        }
+        function copy() {
+          let input = document.getElementById("out")
+          input.select()
+          document.execCommand('copy')
+        }
+        function view(json) {
+          const output=json["shorturl"]
+          let outHTML=`
+          <input type="text" id="out" value="${output}" />
+          <button type="button" onclick="copy()">コピー</button>`
+          document.getElementById("output").innerHTML=outHTML
+        }
+      </script>
+      <script id="isgd"></script>
+    </div>
+  </body>
+</html>
