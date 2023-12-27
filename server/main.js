@@ -66,7 +66,7 @@ async function handler(request, connInfo) {
             User-Agent: ${e.ua}
           </p>
           <p>
-            Time: ${new Date(e.date).toLocaleDateString()}
+            Time: ${new Date(e.date).toUTCString()}
           </p>
         </li>`
       })
