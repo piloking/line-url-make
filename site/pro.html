@@ -20,7 +20,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="LINE url maker">
   <meta name="twitter:description" content="by ame_x & piloking">
-  <meta name="twitter:image" content="https://profile.line-scdn.net/r/g2/group/og_tag_default_image.png/c.496x273">
+  <meta name="twitter:image" content="https://obs.line-scdn.net/0hrKkn3t_FLWRWFz-5ynlSMwRKJgZldTNvdCM5AzZocTAzTAxSbw8baSxCGjAzcghZIRAEQzVoAT96RgxSNiQHAzp_FTB6TBxzLSQXcjhEBiQ9XDZoYg0S/f256x256">
     <link rel="stylesheet" href="https://cdn.ame-x.net/site-auto.css" />
   </head>
   <body>
@@ -76,7 +76,7 @@
           let output=`https://line-url.deno.dev/url?url=${url}&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}&tag=${tag}`;
           const scripturl=("https://is.gd/create.php?format=json&callback=view&url="+encodeURIComponent(output));
           document.getElementById("isgd").src=scripturl;
-          document.getElementById("outurl").innerHTML=`<a href=../ip?tag=${tag}>ログ</a>`;
+          document.getElementById("outurl").innerHTML=`<a href=../ip?tag=${tag}><button>ログ</button></a>`;
         }
         function copy() {
           let input = document.getElementById("out")
