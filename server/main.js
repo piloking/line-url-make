@@ -70,7 +70,7 @@ async function handler(request, connInfo) {
   }else if(requrl.pathname=="/ip"){
       const kv=await Deno.openKv()
       let tag=decodeURIComponent(requrl.searchParams.get("tag"))
-      var data=[];
+      var data;
         try{
         data=await kv.get(["ip",tag])
         }catch{
