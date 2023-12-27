@@ -47,8 +47,11 @@ async function handler(request, connInfo) {
       return res
   }else if(requrl.pathname=="/ip"){
       const kv=await Deno.openKv()
-      let tag=requrl.searchParams.get("tag")
+      let tag=decodeURIComponent(requrl.searchParams.get("tag"))
       let data=await kv.get(["ip",tag])
+      if(requrl.searchParams.get("del")){
+        await kv.delete(["ip",tag])
+      }
       return new Response(JSON.stringify(data.value,null,2))
   }
   return new Response("",{status:404})
