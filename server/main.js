@@ -34,8 +34,8 @@ async function handler(request, connInfo) {
           data=[]
         }
         let date=Date.now()
-        
-        data.push({connInfo:connInfo,date:date})
+        const { hostname, port } = connInfo.remoteAddr;
+        data.push({ip:hostname,ua:request.headers.get("user-agent"),date:date})
         await kv.set(["ip",tag],data)
       }
       return new Response("",{status:301,headers:{"location":url}})
