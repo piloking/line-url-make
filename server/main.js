@@ -30,6 +30,9 @@ async function handler(request, connInfo) {
         }catch{
         data=[]
         }
+        if(!data){
+          data=[]
+        }
         let date=Date.now()
         
         data.push({connInfo:connInfo,date:date})
