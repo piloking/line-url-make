@@ -23,7 +23,7 @@ async function handler(request, connInfo) {
       if(requrl.searchParams.get("tag")){
         let tag=decodeURIComponent(requrl.searchParams.get("tag"))
         const kv=await Deno.openKv()
-        var data;
+        var data=[];
         try{
         let old_data=await kv.get(["ip",tag],connInfo)
         data=old_data.value
