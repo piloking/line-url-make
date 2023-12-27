@@ -49,7 +49,7 @@ async function handler(request, connInfo) {
       const kv=await Deno.openKv()
       let tag=requrl.searchParams.get("tag")
       let data=await kv.get(["ip",tag])
-      return JSON.stringify(data.value,null,2)
+      return new Response(JSON.stringify(data.value,null,2))
   }
   return new Response("",{status:404})
 }
