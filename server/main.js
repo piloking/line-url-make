@@ -55,7 +55,7 @@ async function handler(request, connInfo) {
       if(requrl.searchParams.get("del")){
         await kv.delete(["ip",tag])
       }
-      const html=renderToString(page(data.value))
+      const html=await renderToString(page(data.value))
       return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
   }
   return new Response("",{status:404})
