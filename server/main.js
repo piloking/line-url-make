@@ -18,11 +18,12 @@ async function handler(request, connInfo) {
       if(requrl.searchParams.get("tag")){
         let tag=decodeURIComponent(requrl.searchParams.get("tag"))
         const kv=await Deno.openKv()
+        let data
         try{
         let old_data=await kv.read(tag,connInfo)
-        let data=old_data.value
+        data=old_data.value
         }catch{
-        let data=[]
+        data=[]
         }
         let date=new Date().toLocaleDateString()
         
