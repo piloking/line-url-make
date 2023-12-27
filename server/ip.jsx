@@ -3,11 +3,15 @@ export async function page(data) {
     <ol>
       {data.map((e) => (
         <li>
-          <img alt="icon" class='icon' src={'https://profile.line-scdn.net/' + e.obs} />
           <p>
-            [{e.pid}]{e.name}
+            IP: {e.ip}
           </p>
-          <br />
+          <p>
+            User-Agent: {e.ua}
+          </p>
+          <p>
+            Time: {new Date(e.date).toLocaleDateString()}
+          </p>
         </li>
       ))}
     </ol>
