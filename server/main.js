@@ -11,7 +11,7 @@ async function handler(request, connInfo) {
     const html=await Deno.readTextFile("./site/pro.html")
     return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
   }else if(requrl.pathname=="/short"){
-    const res=await fetch("https://xgd.io/V1/shorten?key=6cdeb7b6073585a6dbf32942e13f0133&url="+encodeURIComponent(requrl.searchParams.get("url"))
+    const res=await fetch("https://xgd.io/V1/shorten?key=6cdeb7b6073585a6dbf32942e13f0133&url="+encodeURIComponent(requrl.searchParams.get("url")))
     return res
   }else if(requrl.pathname=="/url"){
     if((request.headers.get("user-agent").match(/Twitter/))||(request.headers.get("user-agent").match(/facebook/))){
