@@ -66,7 +66,7 @@
           text=encodeURIComponent(document.getElementById("text").value);
           [x,y]=imgxy.split("x");
           let output=`https://line-url.deno.dev/url?url=${url}&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}`;
-          const scripturl=("https://is.gd/create.php?format=json&url="+encodeURIComponent(output));
+          const scripturl=("./short?url="+encodeURIComponent(output));
           const res=await fetch(scripturl);
           const json=await res.json()
           view(json);
