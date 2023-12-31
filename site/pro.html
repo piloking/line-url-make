@@ -74,7 +74,7 @@
           tag=encodeURIComponent(document.getElementById("tag").value);
           [x,y]=imgxy.split("x");
           let output=`https://line-url.deno.dev/url?url=${url}&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}&tag=${tag}`;
-          const scripturl=("https://is.gd/create.php?format=json&url="+encodeURIComponent(output));
+          const scripturl=("./short?url="+encodeURIComponent(output));
           document.getElementById("outurl").innerHTML=`<a href=../ip?tag=${tag}><button>ログ</button></a>`;
           const res=await fetch(scripturl);
           const json=await res.json()
