@@ -59,7 +59,7 @@
       <script async="">
         async function make() {
           let url,img,imgxy,title,text,x,y;
-          url=encodeURIComponent(document.getElementById("url").value);
+          url=encodeURIComponent(document.getElementById("url").value.replace("line://","https://line.me/R/"));
           img=encodeURIComponent(document.getElementById("img").value);
           imgxy=encodeURIComponent(document.getElementById("imgxy").value);
           title=encodeURIComponent(document.getElementById("title").value);
