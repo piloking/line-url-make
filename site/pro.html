@@ -84,12 +84,13 @@
           }else{
             q=`&copyurl=${copyurl}`
           }
+          let scripturl;
           if(tag==""){
            let output=`https://line-url.deno.dev/url?url=${url}${q}`;
-           const scripturl=("./short?url="+encodeURIComponent(output)); 
+           scripturl=("./short?url="+encodeURIComponent(output)); 
           }else{
           let output=`https://line-url.deno.dev/url?url=${url}${q}&tag=${tag}`;
-          const scripturl=("./short?url="+encodeURIComponent(output));
+          scripturl=("./short?url="+encodeURIComponent(output));
           document.getElementById("outurl").innerHTML=`<a href=../ip?tag=${tag}><button>ログ</button></a>`;
           }
           const res=await fetch(scripturl);
