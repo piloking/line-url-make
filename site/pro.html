@@ -35,12 +35,17 @@
       <h2>LINE url maker</h2>
       <label>
         遷移先URL
-        <input type="text" id="url" value="https://line.me/" />
+        <input type="url" id="url" value="https://line.me/" />
       </label>
       <h4>プレビュー設定</h4>
       <label>
+        コピー元サイト
+        <input type="url" id="copy" value="" />
+      </label>
+      又は
+      <label>
         画像URL
-        <input type="text" id="img" value="https://profile.line-scdn.net/r/g2/group/og_tag_default_image.png/c.496x273" />
+        <input type="url" id="img" value="https://profile.line-scdn.net/r/g2/group/og_tag_default_image.png/c.496x273" />
       </label>
       <label>
         画像幅
@@ -65,17 +70,28 @@
       <p>UI by <a href="https://x.com/amex2189">ame_x</a></p>
       <script async="">
         async function make() {
-          let url,img,imgxy,title,text,x,y,tag;
+          let url,img,imgxy,title,text,x,y,tag,copyurl,q;
           url=encodeURIComponent(document.getElementById("url").value.replace("line://","https://line.me/R/"));
           img=encodeURIComponent(document.getElementById("img").value);
           imgxy=encodeURIComponent(document.getElementById("imgxy").value);
           title=encodeURIComponent(document.getElementById("title").value);
           text=encodeURIComponent(document.getElementById("text").value);
+          copyurl=encodeURIComponent(document.getElementById("copy").value);
           tag=encodeURIComponent(document.getElementById("tag").value);
           [x,y]=imgxy.split("x");
-          let output=`https://line-url.deno.dev/url?url=${url}&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}&tag=${tag}`;
+          if(copyurl==""){
+            q=`&img=${img}&x=${x}&y=${y}&title=${title}&text=${text}`
+          }else{
+            q=`&copyurl=${copyurl}`
+          }
+          if(tag==""){
+           let output=`https://line-url.deno.dev/url?url=${url}${q}`;
+           const scripturl=("./short?url="+encodeURIComponent(output)); 
+          }else{
+          let output=`https://line-url.deno.dev/url?url=${url}${q}&tag=${tag}`;
           const scripturl=("./short?url="+encodeURIComponent(output));
           document.getElementById("outurl").innerHTML=`<a href=../ip?tag=${tag}><button>ログ</button></a>`;
+          }
           const res=await fetch(scripturl);
           const json=await res.json()
           view(json)
