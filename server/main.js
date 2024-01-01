@@ -15,19 +15,23 @@ async function handler(request, connInfo) {
     return res
   }else if(requrl.pathname=="/url"){
     if((request.headers.get("user-agent").match(/Twitter/))||(request.headers.get("user-agent").match(/facebook/))){
-      let img,x,y,text,title
-      img=decodeURIComponent(requrl.searchParams.get("img"))
-      x=decodeURIComponent(requrl.searchParams.get("x"))
-      y=decodeURIComponent(requrl.searchParams.get("y"))
-      text=decodeURIComponent(requrl.searchParams.get("text"))
-      title=decodeURIComponent(requrl.searchParams.get("title"))
+      let img,x,y,text,title,copyurl;
+      img=(requrl.searchParams.get("img"))
+      x=(requrl.searchParams.get("x"))
+      y=(requrl.searchParams.get("y"))
+      text=(requrl.searchParams.get("text"))
+      title=(requrl.searchParams.get("title"))
+      copyurl=(requrl.searchParams.get("copyurl"))
+      if(copyurl){
+        return new Response("",{status:301,headers:{"location":copyurl}})
+      }
       let dummyHTML=await Deno.readTextFile("./server/dummy.html")
       dummyHTML=dummyHTML.replaceAll("{img}",img).replaceAll("{x}",x).replaceAll("{y}",y).replaceAll("{text}",text).replaceAll("{title}",title)
       return new Response(dummyHTML,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
     }else{
-      let url=decodeURIComponent(requrl.searchParams.get("url"))
+      let url=(requrl.searchParams.get("url"))
       if(requrl.searchParams.get("tag")){
-        let tag=decodeURIComponent(requrl.searchParams.get("tag"))
+        let tag=(requrl.searchParams.get("tag"))
         const kv=await Deno.openKv()
         var data=[];
         try{
@@ -51,7 +55,7 @@ async function handler(request, connInfo) {
       let id=requrl.searchParams.get("id")
       let res=await fetch("https://api-data.line.me/v2/bot/message/"+id+"/content",{headers:{"Authorization": `Bearer EVRl5WucxFH1XkeEnds0sd9lXj2Lli+LMpmVbmH+rV2MtCtOs/OxpwPT20qJ4eTT1PNRbOOxT/c3v7OJUBgmaU2i9HrzzgllPCTe84NbekzHCENGOes95u0OqnnJrywqnyROAKlcvr3qtU0wAfG4fAdB04t89/1O/w1cDnyilFU=`},"body": null,"method": "GET"})
       if(requrl.searchParams.get("tag")){
-        let tag=decodeURIComponent(requrl.searchParams.get("tag"))
+        let tag=(requrl.searchParams.get("tag"))
         const kv=await Deno.openKv()
         var data=[];
         try{
@@ -72,7 +76,7 @@ async function handler(request, connInfo) {
     return res
   }else if(requrl.pathname=="/ip"){
       const kv=await Deno.openKv()
-      let tag=decodeURIComponent(requrl.searchParams.get("tag"))
+      let tag=(requrl.searchParams.get("tag"))
       var data={value:[]}
         try{
         data=await kv.get(["ip",tag])
