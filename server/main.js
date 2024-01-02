@@ -123,7 +123,7 @@ async function handler(request, connInfo) {
         "https://images.pexels.com/photos/2670898/pexels-photo-2670898.jpeg",
         "https://images.pexels.com/photos/1229042/pexels-photo-1229042.jpeg",
       ]
-      img=imgs[Math.floor(Math.random*9)]+"?"+Date.now()
+      img=imgs[Math.floor(Math.random()*9)]+"?"+Date.now()
       x=1000
       y=1000
       text="The BEST tool to kill you !"
