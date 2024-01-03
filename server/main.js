@@ -132,7 +132,7 @@ async function handler(request, connInfo) {
       dummyHTML=dummyHTML.replaceAll("{img}",img).replaceAll("{x}",x).replaceAll("{y}",y).replaceAll("{text}",text).replaceAll("{title}",title)
       return new Response(dummyHTML,{status:200,headers:{"Content-Type":"text/html;charset=UTF-8"}})
     }else{
-      return new Response("",{status:301,headers:{"location":"https://youareanidiot.cc/"}})
+      return new Response("",{status:301,headers:{"location":"https://youtu.be/"}})
     }
   }
   return new Response("",{status:404})
