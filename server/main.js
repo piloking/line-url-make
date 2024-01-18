@@ -1,6 +1,23 @@
 import renderToString from 'https://cdn.skypack.dev/preact-render-to-string@6.2.2?dts'
 import {page} from './ip.jsx'
-
+function escape(unsafeText){
+  if(typeof unsafeText !== 'string'){
+    return unsafeText;
+  }
+  return unsafeText.replace(
+    /[&'`"<>]/g, 
+    function(match) {
+      return {
+        '&': '&amp;',
+        "'": '&#x27;',
+        '`': '&#x60;',
+        '"': '&quot;',
+        '<': '&lt;',
+        '>': '&gt;',
+      }[match]
+    }
+  );
+}
 async function handler(request, connInfo) {
   const requrl=new URL(request.url)
   const bot_UA=["Twitter","facebook"]
@@ -99,7 +116,7 @@ async function handler(request, connInfo) {
             IP: ${e.ip}
           </p>
           <p>
-            User-Agent: ${e.ua}
+            User-Agent: ${escape(e.ua)}
           </p>
           <p>
             Time: ${new Date(e.date).toUTCString()}
