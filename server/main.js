@@ -1,5 +1,5 @@
 import renderToString from 'https://cdn.skypack.dev/preact-render-to-string@6.2.2?dts'
-import {page} from './ip.jsx'
+
 function escape(unsafeText){
   if(typeof unsafeText !== 'string'){
     return unsafeText;
