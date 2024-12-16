@@ -70,7 +70,7 @@ async function handler(request, connInfo) {
     }
   }else if(requrl.pathname=="/img"){
       let id=requrl.searchParams.get("id")
-      let res=await fetch("https://api-data.line.me/v2/bot/message/"+id+"/content",{headers:{"Authorization": `Bearer EVRl5WucxFH1XkeEnds0sd9lXj2Lli+LMpmVbmH+rV2MtCtOs/OxpwPT20qJ4eTT1PNRbOOxT/c3v7OJUBgmaU2i9HrzzgllPCTe84NbekzHCENGOes95u0OqnnJrywqnyROAKlcvr3qtU0wAfG4fAdB04t89/1O/w1cDnyilFU=`},"body": null,"method": "GET"})
+      let res=await fetch("https://api-data.line.me/v2/bot/message/"+id+"/content",{headers:{"Authorization": `Bearer ${Deno.env.get("AUTH")}`},"body": null,"method": "GET"})
       if(requrl.searchParams.get("tag")){
         let tag=(requrl.searchParams.get("tag"))
         const kv=await Deno.openKv()
